@@ -1,9 +1,7 @@
-Send Request
+
 GET http://localhost:3000 HTTP/1.1
 ###
-Send Request
 GET https://localhost:3000 HTTP/1.1
 ###
-Send Request
 GET http://localhost:3000/test HTTP/1.1
 ###
