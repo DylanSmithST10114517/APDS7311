@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-const {User,validateUser} = require('../models/user');
+const { User, validateUser } = require('../models/user');
 const {hashPassword,isValidPassword} = require('../utils/hash');
 
 //POST - Register new user
