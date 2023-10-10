@@ -1,34 +1,32 @@
 const express = require('express');
 const app = express();
-const urlprefix = '/api';
+const https = require('https');
+const fs = require('fs');
+const hsts = require('./middleware/hsts');
+const mongoose = require('mongoose');
+const helmet = require('helmet');
+const cors = require('cors')
+const connstring = 'mongodb+srv://ST10114517:pgPBm9NFR2yVS739@cluster0.0fq8rs5.mongodb.net/test';
 
-// Define a route for the root URL
-app.get(urlprefix + '/', (req, res) => {
-    res.send('Hello World');
-});
+mongoose.connect(connstring)
 
-// Define a route for getting orders
-app.get(urlprefix + '/orders', (req, res) => {
-    const orders = [
-        {
-            id: "1",
-            name: "Orange"
-        },
-        {
-            id: "2",
-            name: "Banana"
-        },
-        {
-            id: "3",
-            name: "Pear"
-        }
-    ];
+//middleware
+app.use(helmet());
+app.use(express.json());
+app.use(hsts);
+app.use(cors({origin: 'https://localhost:3000', optionsSuccessStatus: 200}));
 
-    
-    res.json({
-        message: "Fruits",
-        orders: orders
-    });
-});
+//routes
+app.use('/api/user', require('./routes/user'));
+app.use('/api/posts', require('./routes/posts'));
 
-module.exports = app;
+//test get
+app.get('/test', (req, res) => {
+    res.send('test worked')
+})
+
+//server
+https.createServer({
+    key: fs.readFileSync('./keys/privatekey.pem'),
+    cert: fs.readFileSync('./keys/certificate.pem')
+}, app).listen(3000);
