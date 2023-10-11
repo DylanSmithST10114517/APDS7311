@@ -9,7 +9,7 @@ function auth(req, res, next) {
 
   try {
     // Verify the JWT token and extract the 'userId' from it
-    const { userId } = jwt.verify(token);
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET);
     id = userId;
   } catch (err) {
     // If there's an error during token verification, return a 401 Unauthorized status

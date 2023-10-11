@@ -1,4 +1,5 @@
 // Import required libraries
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const https = require('https');
@@ -7,10 +8,9 @@ const hsts = require('./middleware/hsts'); // Import HSTS middleware
 const mongoose = require('mongoose');
 const helmet = require('helmet'); // Import helmet for security headers
 const cors = require('cors'); // Import CORS middleware
-const connstring = 'mongodb+srv://ST10114517:pgPBm9NFR2yVS739@cluster0.0fq8rs5.mongodb.net/test';
 
 // Connect to MongoDB using the connection string
-mongoose.connect(connstring);
+mongoose.connect(process.env.CONNSTRING);
 
 // Middleware section
 
