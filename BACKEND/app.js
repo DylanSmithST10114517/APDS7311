@@ -24,7 +24,18 @@ app.use(express.json());
 app.use(hsts);
 
 // Configure CORS settings to allow requests from a specific origin
-app.use(cors({ origin: 'https://localhost:3000', optionsSuccessStatus: 200 }));
+app.use(cors());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+    res.header("Access-Control-Allow-Methods", "GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token, x-refresh-token");
+
+    res.header(
+        "Access-Control-Expose-Headers",
+        "x-access-token"
+    );
+    next();
+})
 
 // Routes section
 
